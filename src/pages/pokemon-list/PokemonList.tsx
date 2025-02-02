@@ -1,33 +1,34 @@
-import {Link} from "react-router-dom";
-import {ROUTE_PATHS} from "../../router/routePaths.ts";
-import {useGetPokemonListQuery} from "../../api/PokemonApis.ts";
+import { useGetPokemonListQuery } from '../../api/PokemonApis.ts'
+import PokemonListItem from '../../components/pokemon-list-item/PokemonListItem.tsx'
+import Loading from '../../core-components/loader/Loader.tsx'
+import PageHeader from '../../components/page-header/PageHeader.tsx'
 
 const PokemonList = () => {
+  const { data, isLoading, isError } = useGetPokemonListQuery()
 
-    const {data, isLoading} = useGetPokemonListQuery();
-    console.log(data?.results[0]);
+  if (isError)
     return (
-        <div className="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
-            <div className="bg-purple-600 text-white text-lg font-bold p-4">
-                PokeReact
-            </div>
-            {
-                isLoading
-                    ? <p>Loading...</p>
-                    : data?.results && <ul className="divide-y divide-gray-300">
-                    {data.results.map((pokemon) => (
-                        <li key={pokemon.name}>
-                            <Link className={"flex items-center gap-4 p-3 hover:bg-gray-100 cursor-pointer"}
-                                  to={ROUTE_PATHS.POKEMON_DETAILS(pokemon.id)}>
-                                <img src={pokemon.imageUrl} alt={pokemon.name} className="w-20 h-20"/>
-                                <span className="capitalize text-gray-800">{pokemon.name}</span>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            }
-        </div>
-    );
-};
+      <p className="text-center p-4 text-red-500">
+        Failed to load Pokémon list.
+      </p>
+    )
 
-export default PokemonList;
+  return (
+    <div className="max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+      <PageHeader title={'PokeDex'} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        data?.results && (
+          <ul className="divide-y divide-gray-300">
+            {data.results.map((pokemon) => (
+              <PokemonListItem key={pokemon.name} pokemon={pokemon} />
+            ))}
+          </ul>
+        )
+      )}
+    </div>
+  )
+}
+
+export default PokemonList
