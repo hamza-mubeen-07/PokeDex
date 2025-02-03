@@ -67,15 +67,7 @@ The app will be running at **http://localhost:5173/** (default Vite port).
 ### **Fetching Pokémon List with Images**
 The PokeAPI does not provide Pokémon images in the list API. To handle this:
 - We extract the **ID** from the Pokémon's `url`.
-- We construct the image URL dynamically using:
-  ```ts
-  export const getPokemonIdAndImage = (url: string) => {
-    const idMatch = url.match(/\/pokemon\/(\d+)/)
-    const id = idMatch ? idMatch[1] : null
-    if (!id) throw new Error('Pokemon ID not found!')
-    return { id, imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png` }
-  }
-  ```
+- We construct the image URL dynamically using: **getPokemonIdAndImage** utils function
 - This transformation is applied **before storing data in Redux**.
 - This approach seems simple and straight as opposed to fetching the images by calling details API against each Pokemon in list API.
 
