@@ -1,50 +1,106 @@
-# React + TypeScript + Vite
+# Pokemon Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 Project Overview
+This is a React application built with **TypeScript, Redux Toolkit, and RTK Query** that fetches and displays a list of Pokémon. Users can click on a Pokémon to view its details.
 
-Currently, two official plugins are available:
+### **Key Features**
+✅ Fetches a list of Pokémon using the **PokeAPI**.
+✅ Stores the fetched data persistently using **Redux Toolkit**.
+✅ Displays detailed information when a Pokémon is selected.
+✅ Uses **React Router** for navigation.
+✅ **Unit & Integration tests** using **Jest & React Testing Library**.
+✅ Configurable **BASE API URL** using an environment file.
+✅ Clean code with **modular and reusable components**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
+- **React** with **TypeScript**
+- **Redux Toolkit & RTK Query**
+- **React Router**
+- **Tailwind CSS**
+- **Jest & React Testing Library** (for Unit & Integration testing)
+- **Vite** (for fast development and build)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## 🏗️ Project Setup
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### **2️⃣ Install Dependencies**
+```sh
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### **3️⃣ Set Up Environment Variables**
+Create a **.env** file in the root directory and define:
+```env
+VITE_BASE_API_URL=https://pokeapi.co
 ```
+
+### **4️⃣ Start the Development Server**
+```sh
+npm run dev
+```
+
+The app will be running at **http://localhost:5173/** (default Vite port).
+
+---
+
+## 📜 Folder Structure
+```
+📂 src
+ ├── 📁 components         # UI Components
+ ├── 📁 pages              # Page Components (List & Detail Page)
+ ├── 📁 store              # Redux Toolkit store
+ ├── 📁 api                # RTK Query API service
+ ├── 📁 utils              # Utility functions
+ ├── 📁 constants          # Constants & configuration
+ ├── 📁 layout             # Layout components
+ ├── main.tsx              # React root file
+ ├── App.tsx               # Main App component
+```
+
+---
+
+## 🔗 API Handling & Data Persistence
+
+### **Fetching Pokémon List with Images**
+The PokeAPI does not provide Pokémon images in the list API. To handle this:
+- We extract the **ID** from the Pokémon's `url`.
+- We construct the image URL dynamically using:
+  ```ts
+  export const getPokemonIdAndImage = (url: string) => {
+    const idMatch = url.match(/\/pokemon\/(\d+)/)
+    const id = idMatch ? idMatch[1] : null
+    if (!id) throw new Error('Pokemon ID not found!')
+    return { id, imageUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png` }
+  }
+  ```
+- This transformation is applied **before storing data in Redux**.
+- This approach seems simple and straight as opposed to fetching the images by calling details API against each Pokemon in list API.
+
+---
+
+## 🧪 Testing
+### **Running Tests**
+```sh
+npm run test
+```
+- **Unit tests** cover individual components, utilities.
+
+---
+
+## 📌 Notes
+- The **coverage folder** and **snapshot folders** are not committed to Git (`.gitignore`).
+
+---
+
+## 📬 Contact
+If you have any questions, feel free to reach out! 🚀
+
+---
+
+## 🎯 Future Improvements
+- **Infinite Scroll or Pagination** for the Pokémon list.
+- **More test coverage for pages and store mocking**.
+
