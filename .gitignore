@@ -11,6 +11,13 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+
+# Ignore Jest coverage reports
+coverage/
+
+# Ignore Jest snapshot tests (Optional)
+__snapshots__/
 
 # Editor directories and files
 .vscode/*

@@ -1,5 +1,5 @@
 export const getPokemonIdAndImage = (url: string) => {
-  const idMatch = url.match(/\/pokemon\/(\d+)\//)
+  const idMatch = url.match(/\/pokemon\/(\d+)\/?$/)
   const id = idMatch ? idMatch[1] : null
 
   if (!id) {

@@ -8,8 +8,6 @@ const PokemonDetail = () => {
   const { id } = useParams<{ id: string }>()
   const { data, isLoading, isError } = useGetPokemonByIdQuery(id as string)
 
-  console.log(data)
-
   if (isLoading) return <Loader />
 
   if (isError || !data)
