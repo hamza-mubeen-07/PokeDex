@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ROUTE_PATHS } from '../../router/routePaths.ts'
+import { ROUTE_PATHS } from '../../constants/routePaths.ts'
 import { Pokemon } from '../../types/pokemon.ts'
 import { FC } from 'react'
 
